@@ -15,8 +15,8 @@ export async function get<T>(url: string, params: Record<string, any> = {}): T {
     return data;
 }
 
-export async function post(url: string, body: Record<string, any> = {}) {
-    const result = await fetch(`${baseUrl}${url}`, {
+export async function post(url: string, body: Record<string, any>) {
+    const result = await fetch(`${baseUrl}${url}/`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
