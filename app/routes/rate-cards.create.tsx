@@ -10,7 +10,9 @@ export async function loader() {
 }
 
 export default function Page() {
-    const { milestones } = useLoaderData<Awaited<typeof loader>>();
+    const { milestones, business_models } = useLoaderData<
+        Awaited<typeof loader>
+    >();
 
     return (
         <div className="flex h-screen items-center justify-center">
@@ -27,6 +29,12 @@ export default function Page() {
                         name="milestone"
                         label="Milestone"
                         options={milestones || []}
+                    />
+                    <SelectInput
+                        id="business_model"
+                        name="business_model"
+                        label="Business model"
+                        options={business_models || []}
                     />
                     <TextInput id="title" name="title" label="Title" />
                 </Form>
