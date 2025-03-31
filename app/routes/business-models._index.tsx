@@ -4,6 +4,7 @@ import { createBusinessModel, getBusinessModels } from "~/api/rate-cards";
 import Button from "~/components/forms/button";
 import Form from "~/components/forms/form";
 import TextInput from "~/components/forms/text";
+import { BusinessModel } from "~/models/RateCard";
 
 export async function loader() {
     return await getBusinessModels();
@@ -28,9 +29,16 @@ export default function Page() {
                         Business models
                     </h1>
                 </header>
-                {businessModels.map((model) => (
-                    <p key={`business_model_${model.id}`}>{model.title}</p>
-                ))}
+                <ul className="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                    {businessModels.map((model, index) => (
+                        <BusinessModelItem
+                            data={model}
+                            first={index === 0}
+                            last={index === businessModels.length - 1}
+                            key={`business_model_${model.id}`}
+                        />
+                    ))}
+                </ul>
                 <Form>
                     <TextInput
                         id="title"
@@ -46,3 +54,20 @@ export default function Page() {
         </div>
     );
 }
+
+export const BusinessModelItem = (
+    { data, first, last }: {
+        data: BusinessModel;
+        first: boolean;
+        last: boolean;
+    },
+) => {
+    const classList = first ? "rounded-t-lg" : last ? "rounded-b-lg" : "";
+    const className =
+        `w-full px-4 py-2 border-b border-gray-200 dark:border-gray-600 ${classList}`;
+    return (
+        <li className={className}>
+            {data.id} - {data.title}
+        </li>
+    );
+};
