@@ -1,5 +1,5 @@
 import { get, post } from "~/api/base";
-import { type BusinessModel } from "~/models/RateCard";
+import { type BusinessModel, ServiceCategory } from "~/models/RateCard";
 
 type MilestoneOption = {
     value: string;
@@ -14,6 +14,10 @@ export type BusinessModelPayload = {
     title: string;
 };
 
+export type ServiceCategoryPayload = {
+    title: string;
+};
+
 export async function getBusinessModels() {
     const response = await get<BusinessModel[]>("business-models");
     return response;
@@ -21,6 +25,16 @@ export async function getBusinessModels() {
 
 export async function createBusinessModel(data: BusinessModelPayload) {
     const response = await post("business-models", data);
+    return response;
+}
+
+export async function getServiceCategories() {
+    const response = await get<ServiceCategory[]>("service-categories");
+    return response;
+}
+
+export async function createServiceCategory(data: ServiceCategoryPayload) {
+    const response = await post("service-categories", data);
     return response;
 }
 
