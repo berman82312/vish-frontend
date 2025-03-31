@@ -5,13 +5,17 @@ import {
     type ServiceCategory,
 } from "~/models/RateCard";
 
-type MilestoneOption = {
+type Option = {
     value: string;
     label: string;
 };
 
 type RateCardOptions = {
-    milestones: Array<MilestoneOption>;
+    milestones: Array<Option>;
+    business_models: Array<Option>;
+    service_categories: Array<Option>;
+    service_areas: Array<Option>;
+    price_units: Array<Option>;
 };
 
 export type BusinessModelPayload = {
@@ -61,7 +65,7 @@ export async function getRateCardOptions() {
     return response;
 }
 
-export async function createRateCard(data: FormData) {
+export async function createRateCard(data: Record<string, unknown>) {
     const response = await post("rate-cards", data);
     return response;
 }
