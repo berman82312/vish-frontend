@@ -8,7 +8,7 @@ import {
 
 export default function HeaderNavbar() {
     return (
-        <Navbar fluid rounded>
+        <Navbar border>
             <NavbarBrand href="/">
                 <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
                     Vish

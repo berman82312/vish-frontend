@@ -44,8 +44,8 @@ export default function Page() {
 
     return (
         <div className="flex min-h-screen items-center justify-center">
-            <div className="flex flex-col items-center gap-16">
-                <header className="flex flex-col items-center gap-9">
+            <div className="flex flex-col w-[480px] p-8 gap-16">
+                <header className="flex flex-col gap-9">
                     <h1 className="leading text-2xl font-bold text-gray-800 dark:text-gray-100">
                         Rate cards
                     </h1>
