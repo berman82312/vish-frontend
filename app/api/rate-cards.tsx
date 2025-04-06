@@ -71,6 +71,11 @@ export async function getRateCards() {
     return response;
 }
 
+export async function getRateCard(id: number | string) {
+    const response = await get<RateCard>(`rate-cards/${id}`);
+    return response;
+}
+
 export async function createRateCard(data: Record<string, unknown>) {
     const response = await post("rate-cards", data);
     return response;
