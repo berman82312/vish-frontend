@@ -1,4 +1,5 @@
 import {
+    Checkbox,
     Table,
     TableBody,
     TableCell,
@@ -17,10 +18,13 @@ type TableProps = {
     rows: unknown[];
     columns: Column[];
     canEdit?: boolean;
+    selection?: boolean;
+    onSelectAll?: (selected: boolean) => void;
+    onSelectRow?: (row: unknown, selected: boolean) => void;
 };
 
 export function VTable(props: TableProps) {
-    const { rows, columns } = props;
+    const { rows, columns, onSelectAll, onSelectRow } = props;
 
     function autoRender(value: unknown) {
         if (typeof value === "boolean") {
@@ -42,9 +46,17 @@ export function VTable(props: TableProps) {
 
     return (
         <div className="w-100 overflow-x-auto">
-            <Table>
+            <Table hoverable={props.selection}>
                 <TableHead>
                     <TableRow>
+                        {props.selection && (
+                            <TableHeadCell className="text-center">
+                                <Checkbox
+                                    onChange={(e) =>
+                                        onSelectAll?.(e.target.checked)}
+                                />
+                            </TableHeadCell>
+                        )}
                         {columns.map((column) => (
                             <TableHeadCell key={column.field}>
                                 {column.title}
@@ -61,8 +73,25 @@ export function VTable(props: TableProps) {
                     {rows.map((row, index) => (
                         <TableRow
                             key={row.id}
-                            className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                            className={`bg-white dark:border-gray-700 dark:bg-gray-800 ${
+                                row.disabled
+                                    ? "opacity-50 cursor-not-allowed"
+                                    : ""
+                            }`}
                         >
+                            {props.selection && (
+                                <TableCell className="text-center">
+                                    <Checkbox
+                                        checked={row.checked}
+                                        disabled={row.disabled}
+                                        onChange={(e) =>
+                                            onSelectRow?.(
+                                                row,
+                                                e.target.checked,
+                                            )}
+                                    />
+                                </TableCell>
+                            )}
                             {columns.map((column) => (
                                 <TableCell
                                     key={column.field}

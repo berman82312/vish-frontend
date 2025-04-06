@@ -28,6 +28,9 @@ export default function HeaderNavbar() {
                 <NavbarLink href="/rate-cards">
                     Rate cards
                 </NavbarLink>
+                <NavbarLink href="/marketplace">
+                    Marketplace
+                </NavbarLink>
             </NavbarCollapse>
         </Navbar>
     );
