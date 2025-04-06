@@ -17,16 +17,15 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     const formData = await request.formData();
     const payload = {
         milestone: formData.get("milestone"),
-        business_model: formData.get("business_model"),
+        business_model_id: formData.get("business_model"),
         title: formData.get("title"),
         price: formData.get("price"),
         price_unit: formData.get("price_unit"),
         default_amount: formData.get("default_amount"),
-        service_categories: formData.getAll("service_categories[]"),
-        service_areas: formData.getAll("service_areas[]"),
+        service_category_ids: formData.getAll("service_categories[]"),
+        service_area_ids: formData.getAll("service_areas[]"),
         is_recurring: formData.get("is_recurring") === "on",
     };
-    // console.log("Updates: ", payload);
     await createRateCard(payload);
     return redirect("/rate-cards");
 };
