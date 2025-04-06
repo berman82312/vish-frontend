@@ -1,13 +1,13 @@
 import { useLoaderData } from "@remix-run/react";
 import { Button } from "flowbite-react";
+import { getRateCards } from "~/api/rate-cards";
 
 export const loader = async () => {
-    const rateCards = await fetch("http://127.0.0.1:8000/api/rate-cards");
-    return Response.json(rateCards);
+    return await getRateCards();
 };
 
 export default function Index() {
-    const rateCards = useLoaderData();
+    const rateCards = useLoaderData<Awaited<typeof loader>>();
     return (
         <div className="flex h-screen items-center justify-center">
             <div className="flex flex-col items-center gap-16">

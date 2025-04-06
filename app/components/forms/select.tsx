@@ -16,7 +16,7 @@ type SelectInputProps = {
 export default function SelectInput(props: SelectInputProps) {
     const { id, label, name, options, value } = props;
     return (
-        <>
+        <div>
             <label
                 htmlFor={id}
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -38,6 +38,6 @@ export default function SelectInput(props: SelectInputProps) {
                     </option>
                 ))}
             </select>
-        </>
+        </div>
     );
 }

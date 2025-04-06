@@ -1,6 +1,7 @@
 import { get, post } from "~/api/base";
 import {
     type BusinessModel,
+    RateCard,
     type ServiceArea,
     type ServiceCategory,
 } from "~/models/RateCard";
@@ -62,6 +63,11 @@ export async function createServiceArea(data: ServiceAreaPayload) {
 
 export async function getRateCardOptions() {
     const response = await get<RateCardOptions>("options/rate-card");
+    return response;
+}
+
+export async function getRateCards() {
+    const response = await get<RateCard[]>("rate-cards");
     return response;
 }
 

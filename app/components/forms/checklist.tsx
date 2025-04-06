@@ -10,11 +10,11 @@ type ChecklistProps = {
 export default function Checklist(props: ChecklistProps) {
     const { options, name, label } = props;
     return (
-        <>
+        <div>
             <h3 className="mb-4 font-semibold text-gray-900 dark:text-white">
                 {label}
             </h3>
-            <ul className="w-48 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            <ul className="text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
                 {options.map((option) => {
                     return (
                         <ChecklistItem
@@ -26,7 +26,7 @@ export default function Checklist(props: ChecklistProps) {
                     );
                 })}
             </ul>
-        </>
+        </div>
     );
 }
 
