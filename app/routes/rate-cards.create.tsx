@@ -17,16 +17,16 @@ export const action = async ({ request }: ActionFunctionArgs) => {
     const formData = await request.formData();
     const payload = {
         milestone: formData.get("milestone"),
-        business_model: formData.get("business_model"),
+        business_model_id: formData.get("business_model"),
         title: formData.get("title"),
         price: formData.get("price"),
         price_unit: formData.get("price_unit"),
         default_amount: formData.get("default_amount"),
-        service_categories: formData.getAll("service_categories[]"),
-        service_areas: formData.getAll("service_areas[]"),
+        service_category_ids: formData.getAll("service_categories[]"),
+        service_area_ids: formData.getAll("service_areas[]"),
         is_recurring: formData.get("is_recurring") === "on",
+        include_rate_card_ids: formData.getAll("include_rate_cards[]"),
     };
-    // console.log("Updates: ", payload);
     await createRateCard(payload);
     return redirect("/rate-cards");
 };
@@ -38,14 +38,15 @@ export default function Page() {
         service_categories,
         service_areas,
         price_units,
+        rate_cards,
     } = useLoaderData<
         Awaited<typeof loader>
     >();
 
     return (
         <div className="flex min-h-screen items-center justify-center">
-            <div className="flex flex-col items-center gap-16">
-                <header className="flex flex-col items-center gap-9">
+            <div className="flex flex-col w-[480px] p-8 gap-16">
+                <header className="flex flex-col gap-9">
                     <h1 className="leading text-2xl font-bold text-gray-800 dark:text-gray-100">
                         Rate cards
                     </h1>
@@ -93,6 +94,11 @@ export default function Page() {
                         label="Service Areas"
                         name="service_areas"
                         options={service_areas || []}
+                    />
+                    <Checklist
+                        label="Related rate cards"
+                        name="include_rate_cards"
+                        options={rate_cards || []}
                     />
                     <Button>Submit</Button>
                 </Form>
