@@ -25,8 +25,12 @@ export default function Index() {
                 <VTable
                     rows={rateCards}
                     columns={[
+                        {
+                            title: "Milestone",
+                            field: "milestone",
+                            renderer: (row) => row.milestone.toUpperCase(),
+                        },
                         { title: "ID", field: "id" },
-                        { title: "Milestone", field: "milestone" },
                         {
                             title: "Business model",
                             field: "business_model",
