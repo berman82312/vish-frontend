@@ -17,6 +17,7 @@ type RateCardOptions = {
     service_categories: Array<Option>;
     service_areas: Array<Option>;
     price_units: Array<Option>;
+    rate_cards: Array<Option>;
 };
 
 export type BusinessModelPayload = {

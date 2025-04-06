@@ -16,6 +16,7 @@ type Column = {
 type TableProps = {
     rows: unknown[];
     columns: Column[];
+    canEdit?: boolean;
 };
 
 export function VTable(props: TableProps) {
@@ -49,6 +50,11 @@ export function VTable(props: TableProps) {
                                 {column.title}
                             </TableHeadCell>
                         ))}
+                        {props.canEdit && (
+                            <TableHeadCell className="text-center">
+                                Edit
+                            </TableHeadCell>
+                        )}
                     </TableRow>
                 </TableHead>
                 <TableBody className="divide-y">
@@ -69,6 +75,16 @@ export function VTable(props: TableProps) {
                                     )}
                                 </TableCell>
                             ))}
+                            {props.canEdit && (
+                                <TableCell className="text-center">
+                                    <a
+                                        href={`rate-cards/${row.id}/edit`}
+                                        className="text-blue-600 hover:underline"
+                                    >
+                                        Edit
+                                    </a>
+                                </TableCell>
+                            )}
                         </TableRow>
                     ))}
                 </TableBody>

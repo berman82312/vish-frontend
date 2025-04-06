@@ -37,6 +37,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         service_category_ids: formData.getAll("service_categories[]"),
         service_area_ids: formData.getAll("service_areas[]"),
         is_recurring: formData.get("is_recurring") === "on",
+        include_rate_card_ids: formData.getAll("include_rate_cards[]"),
     };
     await createRateCard(payload);
     return redirect("/rate-cards");
@@ -51,6 +52,7 @@ export default function Page() {
             service_categories,
             service_areas,
             price_units,
+            rate_cards,
         },
     } = useLoaderData<
         Awaited<typeof loader>
@@ -179,6 +181,18 @@ export default function Page() {
                                 service_area_ids: values,
                             }));
                         }}
+                    />
+                    <Checklist
+                        name="include_rate_cards"
+                        label="Related rate cards"
+                        options={rate_cards || []}
+                        value={rateCard.include_rate_card_ids ||
+                            rateCard.include_rate_cards.map((card) => card.id)}
+                        onChange={(values) =>
+                            setRateCard((prev) => ({
+                                ...prev,
+                                include_rate_card_ids: values,
+                            }))}
                     />
                     <Button>Submit</Button>
                 </Form>

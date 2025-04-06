@@ -49,6 +49,7 @@ export default function Index() {
                         { title: "Unit Price (USD)", field: "price" },
                         { title: "Is recurring", field: "is_recurring" },
                     ]}
+                    canEdit
                 />
             </div>
         </div>

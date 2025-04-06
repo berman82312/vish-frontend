@@ -25,4 +25,5 @@ export type RateCard = {
     service_categories: ServiceCategory[];
     service_areas: ServiceArea[];
     price_unit: string;
+    include_rate_cards: RateCard[];
 };
