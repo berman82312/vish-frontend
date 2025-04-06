@@ -8,15 +8,18 @@
     "dev": "remix vite:dev",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
     "start": "remix-serve ./build/server/index.js",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "postinstall": "flowbite-react patch"
   },
   "dependencies": {
     "@remix-run/node": "^2.16.3",
     "@remix-run/react": "^2.16.3",
     "@remix-run/serve": "^2.16.3",
+    "flowbite-react": "^0.11.7",
     "isbot": "^4.1.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-icons": "^5.5.0"
   },
   "devDependencies": {
     "@remix-run/dev": "^2.16.3",
