@@ -21,7 +21,7 @@ export default function TextInput(props: TextInputProps) {
                 {label}
             </label>
             <input
-                value={value || ""}
+                value={value}
                 type={type ?? "text"}
                 id={id}
                 name={name}
