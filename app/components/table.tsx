@@ -11,16 +11,16 @@ import {
 type Column = {
     title: string;
     field: string;
-    renderer?: (row: unknown, field: string) => React.ReactNode | string;
+    renderer?: (row: any, field: string) => React.ReactNode | string;
 };
 
 type TableProps = {
-    rows: unknown[];
+    rows: any[];
     columns: Column[];
     canEdit?: boolean;
     selection?: boolean;
     onSelectAll?: (selected: boolean) => void;
-    onSelectRow?: (row: unknown, selected: boolean) => void;
+    onSelectRow?: (row: any, selected: boolean) => void;
 };
 
 export function VTable(props: TableProps) {
@@ -34,7 +34,7 @@ export function VTable(props: TableProps) {
     }
 
     function renderField(
-        row: unknown,
+        row: any,
         field: Column["field"],
         renderer: Column["renderer"],
     ) {
