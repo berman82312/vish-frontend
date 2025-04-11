@@ -1,7 +1,7 @@
 import { useLoaderData } from "@remix-run/react";
 import { useState } from "react";
 import { getRateCards } from "~/api/rate-cards";
-import { VTable } from "~/components/table";
+import { VTable } from "~/components/VTable";
 import { RateCard } from "~/models/RateCard";
 
 export const loader = async () => {

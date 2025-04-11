@@ -1,7 +1,7 @@
 import { useLoaderData } from "@remix-run/react";
 import { Button } from "flowbite-react";
 import { getRateCards } from "~/api/rate-cards";
-import { VTable } from "~/components/table";
+import { VTable } from "~/components/VTable";
 import { type RateCard } from "~/models/RateCard";
 
 export const loader = async () => {
