@@ -1,6 +1,7 @@
 type ChecklistProps = {
     name: string;
     label: string;
+    horizontal?: boolean;
     options: Array<{
         value: string;
         label: string;
@@ -10,7 +11,7 @@ type ChecklistProps = {
 };
 
 export default function Checklist(props: ChecklistProps) {
-    const { options, name, label, value, onChange } = props;
+    const { options, horizontal, name, label, value, onChange } = props;
 
     const selectedValues = value || [];
 
@@ -30,10 +31,11 @@ export default function Checklist(props: ChecklistProps) {
             <h3 className="mb-4 font-semibold text-gray-900 dark:text-white">
                 {label}
             </h3>
-            <ul className="text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+            <ul className={`${horizontal ? 'flex'  : ''} text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white`}>
                 {options.map((option) => {
                     return (
                         <ChecklistItem
+                            horizontal={horizontal}
                             key={option.value}
                             name={name}
                             value={option.value}
@@ -53,17 +55,18 @@ export default function Checklist(props: ChecklistProps) {
 }
 
 function ChecklistItem(
-    { name, value, label, checked, onChange }: {
+    { name, value, label, checked, horizontal, onChange }: {
         name: string;
         value: string;
         label: string;
         checked: boolean;
+        horizontal?: boolean;
         onChange?: React.ChangeEventHandler<HTMLInputElement>;
     },
 ) {
     const id = `${name}-${value}`;
     return (
-        <li className="w-full border-b border-gray-200 rounded-t-lg dark:border-gray-600">
+        <li className={`${horizontal ? '' : 'w-full'} border-b border-gray-200 rounded-t-lg dark:border-gray-600`}>
             <div className="flex items-center ps-3">
                 <input
                     id={id}

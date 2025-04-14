@@ -1,6 +1,7 @@
 import { useLoaderData } from "@remix-run/react";
 import { useState } from "react";
 import { getRateCards } from "~/api/rate-cards";
+import Checklist from "~/components/forms/checklist";
 import { VTable } from "~/components/VTable";
 import { RateCard } from "~/models/RateCard";
 
@@ -8,10 +9,45 @@ export const loader = async () => {
     return await getRateCards();
 };
 
+const RateCardColumns = [
+    {
+        title: "Milestone",
+        field: "milestone",
+        renderer: (row: RateCard) => row.milestone.toUpperCase(),
+        default: true,
+    },
+    { title: "ID", field: "id", default: false },
+    {
+        title: "Business model",
+        field: "business_model",
+        renderer: (row: RateCard) => row.business_model.title,
+        default: false,
+    },
+    {
+        title: "Service categories",
+        field: "service_categories",
+        renderer: (row: RateCard) => row.service_categories
+            .map((category) => category.title)
+            .join(", "),
+        default: true
+    },
+    { title: "Price unit", field: "price_unit", default: false },
+    { title: "Title", field: "title", default: true },
+    { title: "Unit Price (USD)", field: "price", default: false },
+    { title: "Is recurring", field: "is_recurring", default: true },
+];
+
 export default function Index() {
     const allRateCards = useLoaderData<Awaited<typeof loader>>();
 
     const [selectedRows, setSelectedRows] = useState<number[]>([]);
+    const [selectedColumns, setSelectedColumns] = useState(
+        RateCardColumns.filter((column) => column.default).map((column) => column.field),
+    )
+
+    const columns = RateCardColumns.filter((column =>
+        selectedColumns.includes(column.field)
+    ))
 
     const selectedRelatedRows = selectedRows.reduce(
         (acc, cur) => {
@@ -46,34 +82,30 @@ export default function Index() {
                     </h1>
                 </header>
             </div>
+            <div>
+                <Checklist
+                    horizontal
+                    label="Columns to display"
+                    name="columns"
+                    options={RateCardColumns.map((column) => ({
+                        value: column.field,
+                        label: column.title,
+                    }))}
+                    value={selectedColumns}
+                    onChange={(event) => {
+                        const selected = event as string[];
+                        setSelectedColumns(
+                            RateCardColumns.filter((column) =>
+                                selected.includes(column.field),
+                            ).map((column) => column.field),
+                        );
+                    }}
+                />
+            </div>
             <div className="w-full p-4">
                 <VTable
                     rows={rateCards}
-                    columns={[
-                        {
-                            title: "Milestone",
-                            field: "milestone",
-                            renderer: (row: RateCard) => row.milestone.toUpperCase(),
-                        },
-                        { title: "ID", field: "id" },
-                        {
-                            title: "Business model",
-                            field: "business_model",
-                            renderer: (row: RateCard) => row.business_model.title,
-                        },
-                        {
-                            title: "Service categories",
-                            field: "service_categories",
-                            renderer: (row: RateCard) =>
-                                row.service_categories
-                                    .map((category) => category.title)
-                                    .join(", "),
-                        },
-                        { title: "Price unit", field: "price_unit" },
-                        { title: "Title", field: "title" },
-                        { title: "Unit Price (USD)", field: "price" },
-                        { title: "Is recurring", field: "is_recurring" },
-                    ]}
+                    columns={columns}
                     selection
                     onSelectAll={(checked) => {
                         setSelectedRows(
