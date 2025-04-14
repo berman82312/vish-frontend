@@ -36,9 +36,9 @@ const RateCardColumns = [
             .join(", "),
         default: true
     },
-    { title: "Price unit", field: "price_unit", default: false },
     { title: "Title", field: "title", default: true },
     { title: "Unit Price (USD)", field: "price", default: false },
+    { title: "Price unit", field: "price_unit", default: false },
     { title: "Is recurring", field: "is_recurring", default: true },
 ];
 
