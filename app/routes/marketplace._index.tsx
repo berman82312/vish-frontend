@@ -1,12 +1,17 @@
 import { useLoaderData } from "@remix-run/react";
 import { useState } from "react";
-import { getRateCards } from "~/api/rate-cards";
+import { getRateCards, getServiceAreas } from "~/api/rate-cards";
 import Checklist from "~/components/forms/checklist";
+import SelectInput from "~/components/forms/select";
 import { VTable } from "~/components/VTable";
 import { RateCard } from "~/models/RateCard";
 
 export const loader = async () => {
-    return await getRateCards();
+    const [areas, rateCards] = await Promise.all([getServiceAreas(), getRateCards()]);
+    return {
+        rateCards,
+        areas,
+    };
 };
 
 const RateCardColumns = [
@@ -38,12 +43,13 @@ const RateCardColumns = [
 ];
 
 export default function Index() {
-    const allRateCards = useLoaderData<Awaited<typeof loader>>();
+    const {rateCards: allRateCards, areas} = useLoaderData<Awaited<typeof loader>>();
 
     const [selectedRows, setSelectedRows] = useState<number[]>([]);
     const [selectedColumns, setSelectedColumns] = useState(
         RateCardColumns.filter((column) => column.default).map((column) => column.field),
     )
+    const [selectedArea, setSelectedAreea] = useState(areas.find(area => area.title === "All")?.id.toString());
 
     const columns = RateCardColumns.filter((column =>
         selectedColumns.includes(column.field)
@@ -66,7 +72,14 @@ export default function Index() {
         [] as number[],
     );
 
-    const rateCards = allRateCards.map((rateCard) => ({
+    const isServeInArea = (rateCard: RateCard) => {
+        const area = areas.find((area) => area.id.toString() === selectedArea);
+        return rateCard.service_areas.some((rateCardArea) => {
+            return rateCardArea.id === area?.id || rateCardArea?.title === "All";
+        });
+    }
+
+    const rateCards = allRateCards.filter(isServeInArea).map((rateCard) => ({
         ...rateCard,
         checked: selectedRows.includes(rateCard.id) ||
             selectedRelatedRows.includes(rateCard.id),
@@ -83,6 +96,19 @@ export default function Index() {
                 </header>
             </div>
             <div>
+                <SelectInput
+                    id="service_area"
+                    label="Service area"
+                    name="service_area"
+                    value={selectedArea}
+                    options={areas.map((area) => ({
+                        value: area.id.toString(),
+                        label: area.title,
+                    }))}
+                    onChange={(event) => {
+                        setSelectedAreea(event.target.value);
+                    }}
+                />
                 <Checklist
                     horizontal
                     label="Columns to display"
