@@ -4,9 +4,9 @@ import TextInput from "~/components/forms/text";
 
 import { redirect, useLoaderData } from "@remix-run/react";
 import {
-    createRateCard,
     getRateCard,
     getRateCardOptions,
+    updateRateCard,
 } from "~/api/rate-cards";
 import Checklist from "~/components/forms/checklist";
 import Toggle from "~/components/forms/toggle";
@@ -25,7 +25,7 @@ export async function loader({ params }: LoaderFunctionArgs) {
     };
 }
 
-export const action = async ({ request }: ActionFunctionArgs) => {
+export const action = async ({ request, params }: ActionFunctionArgs) => {
     const formData = await request.formData();
     const payload = {
         milestone: formData.get("milestone"),
@@ -39,7 +39,7 @@ export const action = async ({ request }: ActionFunctionArgs) => {
         is_recurring: formData.get("is_recurring") === "on",
         include_rate_card_ids: formData.getAll("include_rate_cards[]"),
     };
-    await createRateCard(payload);
+    await updateRateCard(params.id as string, payload);
     return redirect("/rate-cards");
 };
 

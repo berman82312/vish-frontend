@@ -29,3 +29,18 @@ export async function post(url: string, body: Record<string, any>) {
     const data = await result.json();
     return data;
 }
+
+export async function patch(url: string, body: Record<string, any>) {
+    const result = await fetch(`${baseUrl}${url}/`, {
+        method: "PATCH",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
+    });
+    if (!result.ok) {
+        throw new Error(`Error: ${result.status}`);
+    }
+    const data = await result.json();
+    return data;
+}

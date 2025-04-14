@@ -1,4 +1,4 @@
-import { get, post } from "~/api/base";
+import { get, patch, post } from "~/api/base";
 import {
     type BusinessModel,
     RateCard,
@@ -79,5 +79,10 @@ export async function getRateCard(id: number | string) {
 
 export async function createRateCard(data: Record<string, unknown>) {
     const response = await post("rate-cards", data);
+    return response;
+}
+
+export async function updateRateCard(id: string, data: Record<string, unknown>) {
+    const response = await patch(`rate-cards/${id}`, data);
     return response;
 }
