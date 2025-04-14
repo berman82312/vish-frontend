@@ -71,50 +71,60 @@ export function VTable(props: TableProps) {
                 </TableHead>
                 <TableBody className="divide-y">
                     {rows.map((row, index) => (
-                        <TableRow
-                            key={row.id}
-                            className={`bg-white dark:border-gray-700 dark:bg-gray-800 ${
-                                row.disabled
-                                    ? "opacity-50 cursor-not-allowed"
-                                    : ""
-                            }`}
-                        >
-                            {props.selection && (
-                                <TableCell className="text-center">
-                                    <Checkbox
-                                        checked={row.checked}
-                                        disabled={row.disabled}
-                                        onChange={(e) =>
-                                            onSelectRow?.(
-                                                row,
-                                                e.target.checked,
-                                            )}
-                                    />
-                                </TableCell>
-                            )}
-                            {columns.map((column) => (
-                                <TableCell
-                                    key={column.field}
-                                    className="whitespace-nowrap font-medium text-gray-900 dark:text-white"
-                                >
-                                    {renderField(
-                                        row,
-                                        column.field,
-                                        column.renderer,
-                                    )}
-                                </TableCell>
-                            ))}
-                            {props.canEdit && (
-                                <TableCell className="text-center">
-                                    <a
-                                        href={`rate-cards/${row.id}/edit`}
-                                        className="text-blue-600 hover:underline"
+                        <>
+                            <TableRow
+                                key={row.id}
+                                className={`bg-white dark:border-gray-700 dark:bg-gray-800 ${row.disabled
+                                        ? "opacity-50 cursor-not-allowed"
+                                        : ""
+                                    }`}
+                            >
+                                {props.selection && (
+                                    <TableCell className="text-center" rowSpan={row.note ? 2 : 1}>
+                                        <Checkbox
+                                            checked={row.checked}
+                                            disabled={row.disabled}
+                                            onChange={(e) =>
+                                                onSelectRow?.(
+                                                    row,
+                                                    e.target.checked,
+                                                )}
+                                        />
+                                    </TableCell>
+                                )}
+                                {columns.map((column) => (
+                                    <TableCell
+                                        key={column.field}
+                                        className="whitespace-nowrap font-medium text-gray-900 dark:text-white"
                                     >
-                                        Edit
-                                    </a>
-                                </TableCell>
+                                        {renderField(
+                                            row,
+                                            column.field,
+                                            column.renderer,
+                                        )}
+                                    </TableCell>
+                                ))}
+                                {props.canEdit && (
+                                    <TableCell className="text-center">
+                                        <a
+                                            href={`rate-cards/${row.id}/edit`}
+                                            className="text-blue-600 hover:underline"
+                                        >
+                                            Edit
+                                        </a>
+                                    </TableCell>
+                                )}
+                            </TableRow>
+                            {row.note && (
+                                <TableRow style={{borderTop: 0}}>
+                                    <TableCell colSpan={columns.length + 1}>
+                                        <div className="text-sm text-gray-500">
+                                            {row.note}
+                                        </div>
+                                    </TableCell>
+                                </TableRow>
                             )}
-                        </TableRow>
+                        </>
                     ))}
                 </TableBody>
             </Table>

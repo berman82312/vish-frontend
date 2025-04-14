@@ -85,6 +85,7 @@ export default function Index() {
         checked: selectedRows.includes(rateCard.id) ||
             selectedRelatedRows.includes(rateCard.id),
         disabled: selectedRelatedRows.includes(rateCard.id),
+        note: selectedRelatedRows.includes(rateCard.id) ? 'Required by other rate cards' : undefined,
     }));
 
     return (
