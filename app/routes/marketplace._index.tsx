@@ -74,6 +74,7 @@ export default function Index() {
 
     const isServeInArea = (rateCard: RateCard) => {
         const area = areas.find((area) => area.id.toString() === selectedArea);
+        if (area?.title === 'All') return true;
         return rateCard.service_areas.some((rateCardArea) => {
             return rateCardArea.id === area?.id || rateCardArea?.title === "All";
         });

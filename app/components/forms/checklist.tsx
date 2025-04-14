@@ -40,7 +40,7 @@ export default function Checklist(props: ChecklistProps) {
                             name={name}
                             value={option.value}
                             label={option.label}
-                            checked={selectedValues.includes(option.value)}
+                            checked={value ? selectedValues.includes(option.value): undefined}
                             onChange={(e) =>
                                 handleItemChanged(
                                     option.value,
@@ -59,7 +59,7 @@ function ChecklistItem(
         name: string;
         value: string;
         label: string;
-        checked: boolean;
+        checked?: boolean;
         horizontal?: boolean;
         onChange?: React.ChangeEventHandler<HTMLInputElement>;
     },
